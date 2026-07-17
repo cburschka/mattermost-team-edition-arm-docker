@@ -7,3 +7,9 @@ wget https://framagit.org/framasoft/framateam/mostlymatter/-/raw/v${VERSION}-lim
 
 sed -i "s|FROM ubuntu:.*|FROM ubuntu:noble AS builder|" Dockerfile
 sed -i "s|ARG MM_PACKAGE=.*|ARG MM_PACKAGE=\"https://releases.mattermost.com/${VERSION}/mattermost-${VERSION}-linux-arm64.tar.gz?src=docker\"|" Dockerfile
+
+sed -i "/.Final stage/i \
+\# Drop in mostlymatter binary. \n\
+RUN curl -L https:\/\/packages.framasoft.org\/projects\/mostlymatter\/mostlymatter-arm64-v${VERSION} > \/mattermost\/bin\/mattermost \
+\
+" Dockerfile
